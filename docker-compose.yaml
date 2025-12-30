@@ -1,0 +1,49 @@
+
+services:
+  mongo:
+      image: mongo:8.2
+      restart: always
+      ports:
+        - 27017:27017
+      environment:
+        MONGO_INITDB_ROOT_USERNAME_FILE: ${MONGO_INITDB_ROOT_USERNAME_FILE}
+        MONGO_INITDB_ROOT_PASSWORD_FILE: ${MONGO_INITDB_ROOT_PASSWORD_FILE}
+      volumes:
+        - ./mongo:/var/lib/mongo/data
+      secrets:
+      - mongo_initdb_user
+      - mongo_initdb_pass
+
+  # mongo-express:
+  #     image: mongo-express:1.0
+  #     restart: always
+  #     ports:
+  #       - 8081:8081
+  #     environment:
+  #       ME_CONFIG_MONGODB_URL_FILE: ${ME_CONFIG_MONGODB_URL_FILE}
+  #       ME_CONFIG_BASICAUTH_ENABLED: false
+  #       # ME_CONFIG_BASICAUTH_USERNAME_FILE: ${ME_CONFIG_BASICAUTH_USERNAME_FILE}
+  #       # ME_CONFIG_BASICAUTH_PASSWORD_FILE: ${ME_CONFIG_BASICAUTH_PASSWORD_FILE}
+  #     secrets:
+  #     # - me_config_user
+  #     # - me_config_pass
+  #     - mongo_url
+
+secrets:
+  mongo_initdb_user:
+    file: ./credentials/mongo_initdb_user.txt
+  mongo_initdb_pass:
+    file: ./credentials/mongo_initdb_pass.txt
+  # me_config_user:
+  #   file: ./credentials/me_config_user.txt
+  # me_config_pass:
+  #   file: ./credentials/me_config_pass.txt
+  # mongo_url:
+  #   file: ./credentials/mongo_url.txt
+  # postgres_user:
+  #   file: ./credentials/db_user.txt
+  # postgres_pass:
+  #   file: ./credentials/db_pass.txt
+
+volumes:
+  mongo:
