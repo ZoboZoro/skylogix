@@ -60,17 +60,22 @@ def api_to_mongo(
 
         # Fetch data specific to each region's API
             for city in location:
-                    query = {
-                        **querystrings,
-                        "lat": city["lat"],
-                        "lon": city["lon"]
-                    }
+                query = {
+                    **querystrings,
+                    "lat": city["lat"],
+                    "lon": city["lon"]
+                }
 
-                    try:
-                        response = requests.get(url, params=query, timeout=timeout)
-                        if response.status_code == 200:
-                            response = response.json()
-                            document = {
+                try:
+                    response = requests.get(
+                            url,
+                            params=query,
+                            timeout=timeout
+                        )
+
+                    if response.status_code == 200:
+                        response = response.json()
+                        document = {
                                 "source": source,
                                 "city": city["city"],
                                 "ingested_at": datetime.now(tz=timezone.utc),
@@ -81,41 +86,39 @@ def api_to_mongo(
                                 "api_response": response
                             }
 
-                            logging.info(f"extraction complete!, now ingesting to database: {database}")
+                        logging.info(
+                                f"extraction complete!,"
+                                f"now ingesting to database: {database}")
 
-                            observation_time = datetime.fromtimestamp(response["data"][0]["ts"], tz=timezone.utc)
-                            filter_query = {
+                        observation_time = datetime.fromtimestamp(
+                                response["data"][0]["ts"], tz=timezone.utc
+                                )
+
+                        filter_query = {
                                 "source": source,
                                 "city": city["city"],
                                 "observation_time": observation_time
                             }
 
-                            update_query = {
+                        update_query = {
                                 "$set": document
                             }
 
-                            db_collection.update_one(
+                        db_collection.update_one(
                                 filter_query,
                                 update_query,
                                 upsert=True
                             )
 
-                            logging.info(
-                            f"Weather data upserted for {city['city']} at {observation_time}"
+                        logging.info(
+                                f"Weather data upserted for"
+                                f"{city['city']} at {observation_time}"
                             )
 
-                        else:
+                    else:
                             logging.error(f"Error!: {response.text}")
-                    except Exception as e:
-                        logging.exception(f"API Connection error:, {e}")
+                except Exception as e:
+                    logging.exception(f"API Connection error:, {e}")
     except PyMongoError as e:
         logging.error(f"MongoDB insertion failed: {e}")
         raise
-
-
-# print(api_to_mongo(url=base_url,
-#                 querystrings=params,
-#                 connection=CONNECTION_STRING,
-#                 database='skylogix',
-#                 collection='weather_staging',
-#                 source="weatherbits.io"))
