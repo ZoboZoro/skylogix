@@ -6,7 +6,8 @@ import requests
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
-from config import MONGO_PASS, MONGO_USER, CONNECTION_STRING
+
+from config import CONNECTION_STRING
 
 # configure logging
 logging.basicConfig(
@@ -16,21 +17,6 @@ logging.basicConfig(
 )
 
 load_dotenv(dotenv_path='/home/taofeecoh/skylogix/.env', verbose=True)
-
-
-# Define variables
-base_url = 'https://api.weatherbit.io/v2.0/forecast/daily'
-params = {
-    'lat': '6.465422',  # Lagos
-    'lon': '3.406448',
-    'key': os.getenv("API_KEY")
-        }
-
-cities = [
-    {"city": "Lagos", "lat": 6.465422,"lon": 3.406448},
-    {"city": "Accra", "lat": 5.614818, "lon": -0.205874},
-    {"city": "Johannesburg", "lat": -26.195246, "lon": 28.034088}
-]
 
 
 def api_to_mongo(
@@ -125,13 +111,28 @@ def api_to_mongo(
         raise
 
 
+# Define variables
+base_url = 'https://api.weatherbit.io/v2.0/forecast/daily'
+params = {
+    'lat': '6.465422',  # Lagos
+    'lon': '3.406448',
+    'key': os.getenv("API_KEY")
+        }
+
+cities = [
+    {"city": "Lagos", "lat": 6.465422, "lon": 3.406448},
+    {"city": "Accra", "lat": 5.614818, "lon": -0.205874},
+    {"city": "Johannesburg", "lat": -26.195246, "lon": 28.034088}
+]
+
+
 if __name__ == "__main__":
     api_to_mongo(
         url=base_url,
-                querystrings=params,
-                connection=CONNECTION_STRING,
-                database='skylogix',
-                collection='weatherbits',
-                source="weatherbits.io",
-                location=cities
-                )
+        querystrings=params,
+        connection=CONNECTION_STRING,
+        database='skylogix',
+        collection='weatherbits',
+        source="weatherbits.io",
+        location=cities
+    )
