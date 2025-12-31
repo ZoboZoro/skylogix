@@ -114,8 +114,6 @@ def api_to_mongo(
 # Define variables
 base_url = 'https://api.weatherbit.io/v2.0/forecast/daily'
 params = {
-    'lat': '6.465422',  # Lagos
-    'lon': '3.406448',
     'key': os.getenv("API_KEY")
         }
 
