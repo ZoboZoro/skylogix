@@ -30,8 +30,10 @@ MongoDB acts as a raw but structured staging layer, optimized for:
 - Fast upserts
 - Reliable CDC-style replication via Airbyte
 
-Example Document Structure:
-![document structure](assets/doc_structure.png)
+Document Structure:
+
+
+- ![document structure](assets/doc_structure.png)
 
 ### Future Improvements
 - Orchestrate ingestion and syncs with Airflow
