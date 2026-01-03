@@ -1,8 +1,9 @@
 # skylogix Transportation
 
 ## Weather Data Ingestion & Analytics Pipeline
-Overview
-
+### Problem
+ ###
+### Solution
 This project implements an end-to-end data pipeline for ingesting, staging, replicating, and modeling weather API data for analytics and dashboarding use cases.
 
 The pipeline uses MongoDB as a staging database, a Python ingestion service for polling external weather APIs, Airbyte (Docker) for data replication, and DuckDB as the analytical warehouse.
@@ -43,5 +44,4 @@ Document Structure:
 - Publish dashboards using Metabase or Superset
 
 #### Author
-Taofeecoh Adesanu
-Data Engineer
+Taofeecoh Adesanu, Data Engineer
