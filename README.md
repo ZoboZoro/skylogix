@@ -44,4 +44,5 @@ Document Structure:
 - Publish dashboards using Metabase or Superset
 
 #### Author
-Taofeecoh Adesanu, Data Engineer
+##### Taofeecoh Adesanu
+Data Engineer
