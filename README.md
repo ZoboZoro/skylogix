@@ -33,7 +33,6 @@ MongoDB acts as a raw but structured staging layer, optimized for:
 
 Document Structure:
 
-
 - ![document structure](assets/doc_structure.png)
 
 ### Future Improvements
