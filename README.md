@@ -1,7 +1,7 @@
 # skylogix Transportation
 
 ## Weather Data Ingestion & Analytics Pipeline
-### Problem
+### Business Problem
  ###
 ### Solution
 This project implements an end-to-end data pipeline for ingesting, staging, replicating, and modeling weather API data for analytics and dashboarding use cases.
